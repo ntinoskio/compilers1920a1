@@ -7,13 +7,15 @@
 """
 
 
-transitions = { 
-
+transitions = {
 	# (Α) Συμπληρώστε τον πίνακα μεταβάσεων ως λεξικό (dictionary).
 	# Η αρχική κατάσταση πρέπει να ονομάζεται 's0'.
 	# Για λεπτομέρειες δείτε στο:
 	# http://mixstef.github.io/courses/compilers/lecturedoc/unit1/module1.html#id7
-
+	's0': {'DIGIT': 's1', '.': 's2'},
+	's1': {'.': 's3', 'DIGIT': 's1'},
+	's2': {'DIGIT': 's3'},
+	's3': {'DIGIT': 's3'}
      	      } 
 
 
@@ -23,7 +25,7 @@ accepts = {
 	# αντίστοιχων επιστρεφόμενων συμβόλων (tokens)
 	# Για λεπτομέρειες δείτε στο:
 	# http://mixstef.github.io/courses/compilers/lecturedoc/unit1/module1.html#id8
-
+	's3': 'FLOAT_TOKEN'
      	  }
 
 
@@ -39,7 +41,7 @@ def get_char(text,pos):
 	# χαρακτήρες εισόδου εδώ.
 	# Για λεπτομέρειες δείτε στο:
 	# http://mixstef.github.io/courses/compilers/lecturedoc/unit1/module1.html#id11
-	
+	if c>='0' and c<='9': return 'DIGIT'
 	return c
 	
 
@@ -78,5 +80,4 @@ def scan(text,transitions,accepts,state):
 for test in ['12.456','6789.','.66998','1234','.']:
 	m = scan(test,transitions,accepts,'s0')
 	print("Testing '{}'\nResult: {}\n".format(test,m))
-
 
